@@ -12,6 +12,12 @@ on:
     paths:
       - 'backend/**'
 
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+
 # 해당 옵션을 통해 사용자가 직접 Actions 탭에서 Workflow를 실행시킬 수 있음
   workflow_dispatch:
 
@@ -48,17 +54,17 @@ jobs:
         arguments: build
         build-root-directory: backend/
 
-    - name: Add coverage to PR
-      if: ${{ github.event.workflow_run.event == 'pull_request' }}
-      id: jacoco
-      uses: madrapps/jacoco-report@v1.3
-      with:
-        paths: ${{ github.workspace }}/backend/build/reports/jacoco/test/jacocoTestReport.xml
-        token: ${{ secrets.GITHUB_TOKEN }}
-        min-coverage-overall: 40
-        min-coverage-changed-files: 60
-        title: Code Coverage
-        update-comment: true
+#    - name: Add coverage to PR
+#      if: ${{ github.event.workflow_run.event == 'pull_request' }}
+#      id: jacoco
+#      uses: madrapps/jacoco-report@v1.3
+#      with:
+#        paths: ${{ github.workspace }}/backend/build/reports/jacoco/test/jacocoTestReport.xml
+#        token: ${{ secrets.GITHUB_TOKEN }}
+#        min-coverage-overall: 40
+#        min-coverage-changed-files: 60
+#        title: Code Coverage
+#        update-comment: true
 
     - name: Upload Gradle Build Artifact
       uses: actions/upload-artifact@v3.1.2
