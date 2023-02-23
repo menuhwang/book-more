@@ -18,7 +18,6 @@ import site.bookmore.bookmore.books.util.api.kakao.dto.KakaoSearchParams;
 import site.bookmore.bookmore.books.util.api.kakao.dto.KakaoSearchResponse;
 import site.bookmore.bookmore.books.util.api.kakao.dto.Meta;
 import site.bookmore.bookmore.books.util.crawler.BookCrawler;
-import site.bookmore.bookmore.books.util.crawler.KakaoBookCrawler;
 import site.bookmore.bookmore.books.util.mapper.BookMapper;
 
 import java.lang.reflect.InvocationTargetException;
@@ -39,7 +38,7 @@ public class KakaoBookSearch implements BookSearch<KakaoSearchParams> {
 
     private final WebClient webClient = WebClient.create(BASE_URL);
 
-    public KakaoBookSearch(@Value("${api.token.kakao}") String kakaoToken, KakaoBookCrawler bookCrawler) {
+    public KakaoBookSearch(@Value("${api.token.kakao}") String kakaoToken, BookCrawler bookCrawler) {
         this.token = kakaoToken;
         this.bookCrawler = bookCrawler;
     }
