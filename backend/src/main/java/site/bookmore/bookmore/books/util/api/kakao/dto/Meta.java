@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Meta {
     private long total_count;
-    private long pageable_count;
+    private int pageable_count;
     private boolean is_end;
 }
