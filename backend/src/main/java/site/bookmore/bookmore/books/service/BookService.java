@@ -15,7 +15,9 @@ import site.bookmore.bookmore.books.dto.BookSearchParams;
 import site.bookmore.bookmore.books.entity.Book;
 import site.bookmore.bookmore.books.repository.BookRepository;
 import site.bookmore.bookmore.books.util.api.kakao.KakaoBookSearch;
+import site.bookmore.bookmore.books.util.api.kakao.dto.KakaoSearchParams;
 import site.bookmore.bookmore.books.util.api.kolis.KolisBookSearch;
+import site.bookmore.bookmore.books.util.api.kolis.dto.KolisSearchParams;
 import site.bookmore.bookmore.books.util.api.naver.NaverBooksearch;
 import site.bookmore.bookmore.books.util.api.naver.dto.NaverSearchParams;
 import site.bookmore.bookmore.common.exception.not_found.BookNotFoundException;
@@ -55,9 +57,9 @@ public class BookService {
 
         List<Mono<Book>> requests = new ArrayList<>();
 
-        requests.add(naverBooksearch.searchByISBN(isbn));
-        requests.add(kakaoBookSearch.searchByISBN(isbn));
-        requests.add(kolisBookSearch.searchByISBN(isbn));
+        requests.add(naverBooksearch.searchByISBN(NaverSearchParams.of(isbn)));
+        requests.add(kakaoBookSearch.searchByISBN(KakaoSearchParams.of(isbn)));
+        requests.add(kolisBookSearch.searchByISBN(KolisSearchParams.of(isbn)));
 
         Flux<Book> bookFlux = Flux.merge(requests);
         Book book = bookFlux.subscribeOn(Schedulers.parallel())

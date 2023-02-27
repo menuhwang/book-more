@@ -11,6 +11,7 @@ import site.bookmore.bookmore.books.dto.BookSearchParams;
 import site.bookmore.bookmore.books.entity.Book;
 import site.bookmore.bookmore.books.entity.Subject;
 import site.bookmore.bookmore.books.repository.BookRepository;
+import site.bookmore.bookmore.books.util.api.BookSearchApiParams;
 import site.bookmore.bookmore.books.util.api.kakao.KakaoBookSearch;
 import site.bookmore.bookmore.books.util.api.kolis.KolisBookSearch;
 import site.bookmore.bookmore.books.util.api.naver.NaverBooksearch;
@@ -25,7 +26,6 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -78,8 +78,8 @@ class BookServiceTest {
         assertEquals(book.getPrice(), result.getPrice());
 
         verify(bookRepository).findById("10001");
-        verify(kakaoBookSearch, never()).searchByISBN(anyString());
-        verify(kolisBookSearch, never()).searchByISBN(anyString());
+        verify(kakaoBookSearch, never()).searchByISBN(any(BookSearchApiParams.class));
+        verify(kolisBookSearch, never()).searchByISBN(any(BookSearchApiParams.class));
     }
 
     @Test
@@ -106,9 +106,9 @@ class BookServiceTest {
                 .build();
 
         given(bookRepository.findById("10001")).willReturn(Optional.empty());
-        given(naverBooksearch.searchByISBN("10001")).willReturn(Mono.just(book1));
-        given(kakaoBookSearch.searchByISBN("10001")).willReturn(Mono.just(book2));
-        given(kolisBookSearch.searchByISBN("10001")).willReturn(Mono.just(book3));
+        given(naverBooksearch.searchByISBN(any(BookSearchApiParams.class))).willReturn(Mono.just(book1));
+        given(kakaoBookSearch.searchByISBN(any(BookSearchApiParams.class))).willReturn(Mono.just(book2));
+        given(kolisBookSearch.searchByISBN(any(BookSearchApiParams.class))).willReturn(Mono.just(book3));
 
         BookDetailResponse result = bookService.searchByISBN("10001");
 
@@ -120,9 +120,9 @@ class BookServiceTest {
         assertEquals(book3.getImage(), result.getImage());
 
         verify(bookRepository).findById("10001");
-        verify(naverBooksearch).searchByISBN(anyString());
-        verify(kakaoBookSearch).searchByISBN(anyString());
-        verify(kolisBookSearch).searchByISBN(anyString());
+        verify(naverBooksearch).searchByISBN(any(BookSearchApiParams.class));
+        verify(kakaoBookSearch).searchByISBN(any(BookSearchApiParams.class));
+        verify(kolisBookSearch).searchByISBN(any(BookSearchApiParams.class));
     }
 
     @Test
@@ -134,15 +134,15 @@ class BookServiceTest {
         Book book3 = Book.empty();
 
         given(bookRepository.findById("10001")).willReturn(Optional.empty());
-        given(naverBooksearch.searchByISBN("10001")).willReturn(Mono.just(book1));
-        given(kakaoBookSearch.searchByISBN("10001")).willReturn(Mono.just(book2));
-        given(kolisBookSearch.searchByISBN("10001")).willReturn(Mono.just(book3));
+        given(naverBooksearch.searchByISBN(any(BookSearchApiParams.class))).willReturn(Mono.just(book1));
+        given(kakaoBookSearch.searchByISBN(any(BookSearchApiParams.class))).willReturn(Mono.just(book2));
+        given(kolisBookSearch.searchByISBN(any(BookSearchApiParams.class))).willReturn(Mono.just(book3));
 
         assertThrows(BookNotFoundException.class, () -> bookService.searchByISBN("10001"));
 
         verify(bookRepository).findById("10001");
-        verify(naverBooksearch).searchByISBN(anyString());
-        verify(kakaoBookSearch).searchByISBN(anyString());
-        verify(kolisBookSearch).searchByISBN(anyString());
+        verify(naverBooksearch).searchByISBN(any(BookSearchApiParams.class));
+        verify(kakaoBookSearch).searchByISBN(any(BookSearchApiParams.class));
+        verify(kolisBookSearch).searchByISBN(any(BookSearchApiParams.class));
     }
 }
