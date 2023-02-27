@@ -1,4 +1,4 @@
-package site.bookmore.bookmore.config;
+package site.bookmore.bookmore.books.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
