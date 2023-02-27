@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import site.bookmore.bookmore.books.dto.BookSearchParams;
+import site.bookmore.bookmore.books.util.api.BookSearchApiParams;
 
 @Builder
 @AllArgsConstructor
 @Getter
-public class NaverSearchParams {
+public class NaverSearchParams implements BookSearchApiParams {
     private String d_titl;
     private String d_isbn;
     private Integer display;
