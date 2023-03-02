@@ -12,9 +12,13 @@ function join() {
     const passwordCheck = document.getElementById('passwordCheck').value;
     const nickname = document.getElementById('name').value;
     const birth = birthArr.join("-");
+    const joinBtn = document.getElementById('join-btn');
+
+    joinBtn.disabled = true;
 
     if(password != passwordCheck){
         alert('비밀번호가 일치하지 않습니다.')
+        joinBtn.disabled = false;
         return;
     }
     // request api
@@ -34,6 +38,7 @@ function join() {
             window.location.href = "login.html";
         } else if (response.resultCode === 'ERROR') {
             alert(response.result.message);
+            joinBtn.disabled = false;
         }
     });
 }
