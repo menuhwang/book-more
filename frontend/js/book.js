@@ -74,11 +74,12 @@ function fetchSearchBookDetail(isbn) {
                         <hr/>
                         <div>
                             <h4>책소개</h4>
-                            <textarea class="w-100 border-0 mb-3" readonly rows="12">${book.introduce || '-'}</textarea>
+                            <textarea class="w-100 border-0 mb-3" readonly rows="12" style="resize: none">${book.introduce || '-'}</textarea>
+                            <hr>
                             <h4>목차</h4>
-                            <p class="desc">
+                            <div class="desc overflow-scroll" style="height: 20rem">
                                 ${book.chapter || '-'}
-                            </p>
+                            </div>
                         </div>
                     </div>`;
         } else if (resultCode === 'ERROR') {
